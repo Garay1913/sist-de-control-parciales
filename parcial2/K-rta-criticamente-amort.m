@@ -19,3 +19,31 @@ title('Lugar Geométrico de las Raíces para G(s)K');
 xlabel('Eje Real');
 ylabel('Eje Imaginario');
 grid on;
+
+
+%----------------- CON CALCULO ---------------------
+clc; clear all; close all;
+pkg load control;
+
+s = tf('s');
+G = 2 /((s+15)*(s+3))
+
+# Para determinar el punto de trabajo
+figure; rlocus(G); sgrid(1, 10);
+
+%vemos 2 polos s1 = -15 y s2 = -3
+breakawayPoint = ((-15)+(-3))/ 2
+
+%punto de ruptura = 9
+
+%Condicion de modulo K = 1 / |G(pto de rup)|
+denK = abs(2/((breakawayPoint+15)*(breakawayPoint+3)))
+K = 1/denK
+
+
+FdTLA = K*G
+# Simulacion
+FdTLC = minreal(feedback(FdTLA, 1))
+figure; step(FdTLC);
+figure; rlocus(FdTLC);
+pole(FdTLC)
