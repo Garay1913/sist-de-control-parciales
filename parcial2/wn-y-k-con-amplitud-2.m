@@ -5,8 +5,10 @@ s=tf('s')
 Ymax=1.67
 Yss=1.6
 Tp=0.0529
-#k=yss/R donde R era la amplitud del escalon
-K=Yss/2
+A = 2;
+
+#k=yss/A donde A era la amplitud del escalon
+K=Yss/A
 
 %SOBREPASAMIENTO MAXIMO
 Mp=(Ymax-Yss)/Yss
