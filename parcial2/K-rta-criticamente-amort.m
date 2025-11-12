@@ -26,24 +26,54 @@ clc; clear all; close all;
 pkg load control;
 
 s = tf('s');
-G = 2 /((s+15)*(s+3))
+G = 2 /((s+15)*(s+3));
 
-# Para determinar el punto de trabajo
+%Para determinar el punto de trabajo es -9 
+%si uso rlocus, o puedo sacarlo con los polos 
 figure; rlocus(G); sgrid(1, 10);
+pole(G)
 
 %vemos 2 polos s1 = -15 y s2 = -3
 breakawayPoint = ((-15)+(-3))/ 2
 
-%punto de ruptura = 9
+% deben coincidir
+%punto de ruptura = -9
 
 %Condicion de modulo K = 1 / |G(pto de rup)|
-denK = abs(2/((breakawayPoint+15)*(breakawayPoint+3)))
+denK = abs(2/((breakawayPoint+15)*(breakawayPoint+3)));
 K = 1/denK
 
 
-FdTLA = K*G
+FdTLA = K*G;
 # Simulacion
-FdTLC = minreal(feedback(FdTLA, 1))
+FdTLC = minreal(feedback(FdTLA, 1));
+figure; step(FdTLC);
+figure; rlocus(FdTLC);
+pole(FdTLC)
+
+% ------------------- G(s) = 1 /((s+2)*(s+24))  -------------------------------
+clc; clear all; close all;
+pkg load control;
+
+s = tf('s');
+G = 1 /((s+2)*(s+24));
+
+# Para determinar el punto de trabajo
+figure; rlocus(G); sgrid(1, 10);
+
+%vemos 2 polos s1 = -24 y s2 = -2
+breakawayPoint = ((-24)+(-2))/ 2
+
+%punto de ruptura = 13
+
+%Condicion de modulo K = 1 / |G(pto de rup)|
+denK = abs(1/((breakawayPoint+2)*(breakawayPoint+24)));
+K = 1/denK
+
+
+FdTLA = K*G;
+# Simulacion
+FdTLC = minreal(feedback(FdTLA, 1));
 figure; step(FdTLC);
 figure; rlocus(FdTLC);
 pole(FdTLC)

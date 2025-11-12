@@ -43,7 +43,14 @@ rlocus(L);
 sgrid(psita, []); % Dibuja la línea para Zeta = 0.559 y Wn vacío
 title('LGR del Sistema Simplificado (Click para Kp)');
 
-printf('\nEl Kp calculado analíticamente es: %.2f\n', 253.06);
+% Definimos el punto de trabajo
+s_visual = -3.5038 + 5.20j; 
+
+% Calculamos el valor de L en ese punto
+val_L = 3.1 / (s_visual * (s_visual + 14.9881) * (s_visual + 11.9224));
+
+% Calcula Kp
+Kp_calculado = 1 / abs(val_L)
 
 % Pregunta 3: Valor Final
 % La pregunta es ambigua.
@@ -64,6 +71,3 @@ Kp = 100;
 Kpos = Kp * dcgain(G);
 % yss = A * Kpos / (1 + Kpos)
 yss_p = A * Kpos / (1 + Kpos);
-printf('Interpretación 2 (Solo Kp=100, Tipo 0): yss = %.5f\n', yss_p);
-printf('\nEl casillero (0.071) es cercano a 0.06458, lo que sugiere');
-printf(' que la pregunta se refería a un controlador P (Tipo 0).\n')
